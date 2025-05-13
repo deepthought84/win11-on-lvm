@@ -82,6 +82,8 @@ sudo mkdir -p /boot/skoll-hypervisor
 sudo cp ${chroot}/skoll-hypervisor/vmlinuz /boot/skoll-hypervisor/vmlinuz-skoll-hypervisor
 sudo cp ${chroot}/}skoll-hypervisor/initrd.img /boot/skoll-hypervisor/initrd-skoll-hypervisor.img
 ```
+TODO: Automate this
+
 Review /boot/grub/grub.cfg and use first menuentry as a base, replace the correct paths in the lines starting with linux and initrd and title, change uuid starting with gnulinux-simple- (use uuidgen), leave everything else as is and append to `/etc/grub.d/40_custom`, for me it looks like this:
 ```
 echo "menuentry 'Windows 11 hypervisor' --class debian --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-simple-1fb7af99-af53-4dcb-b898-57b42a80f0ef' {
@@ -174,4 +176,9 @@ Now start the Windows-VM:
 systemctl start start-skoll
 ```
 If everything went well, the Windows-VM should now take over and voila you Windows on encrypted LVM :)
+
+## Choose plymouth screen ##
+To have a smooth splash-screen I recommend to install plymouth and choose a theme (beautiful themes are available here https://github.com/adi1090x/plymouth-themes).
+Reboot and install and set the theme as in the hypervisor, and copy the initrd, to your boot partition,
+reboot and add ```quiet splash``` to the custom entry in your grub-Config on your main linux
 
