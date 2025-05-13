@@ -151,8 +151,27 @@ Next Reboot into the Hypervisor again and add the Windows-VM with
 ```
 virsh define skoll.xml
 ```
-Add a systemd-Unit for starting the VM and attach the USB-Devices
+Add a systemd-Unit for starting the VM and attaching the USB-Devices:
+```
+echo "[Unit]
+Description=start domain skoll
 
+[Service]
+ExecStart=/bin/bash /opt/start-skoll/start-skoll.sh skoll
+WorkingDirectory=/opt/start-skoll
 
+[Install]
+WantedBy=multi-user.target" > /etc/systemd/system/start-skoll.service
+systemctl daemon-reload
+systemctl enable start-skoll
+```
+copy start-skoll from this repository to /opt
+Replace the xml-Configs with your own devices (use lsusb to find out Vendor/Product-Ids), and update start-skoll.sh with the name of your devices (referencing the xml-Files).
+e.g. you have a keyboard.xml let this be reflected as keybaord in the devices arry.
 
+Now start the Windows-VM:
+```
+systemctl start start-skoll
+```
+If everything went well, the Windows-VM should now take over and voila you Windows on encrypted LVM :)
 
