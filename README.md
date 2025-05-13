@@ -4,6 +4,8 @@ Boot Windows 11 from LVM on luks2 inside libvirt with GPU/USB-Passthrough.
 
 Why? I find LVM very practical for managing storage and do not trust bitlocker, nor trust Windows to access my other partitions.
 
+This is just a first version of the tutorial, I plan to automate it a bit more and make it less tedious (less reboots)
+
 Footprint: 4GB in Storage, about 1GB in RAM 
 
 Guide assumes you use Debian with LVM on luks2 and have virt-manager installed (not scope of this guide, there should be enough resources about this), should also work on Ubuntu
