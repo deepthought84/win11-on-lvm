@@ -1,6 +1,6 @@
 # win11-on-lvm
 Windows 11 on LVM (hack))
-Boot Windows 11 from LVM on luks2 inside libvirt with GPU/USB-Passthrough.
+Boot Windows 11 from LVM on luks2 inside libvirt with from a tiny hypervisor OS (debian) GPU/USB-Passthrough.
 
 Why? I find LVM very practical for managing storage and do not trust bitlocker, nor trust Windows to access my other partitions.
 
