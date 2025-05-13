@@ -151,4 +151,8 @@ Next Reboot into the Hypervisor again and add the Windows-VM with
 ```
 virsh define skoll.xml
 ```
+Add a systemd-Unit for starting the VM and attach the USB-Devices
+
+
+
 
