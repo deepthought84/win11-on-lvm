@@ -109,7 +109,7 @@ Restart and boot into the new entry, you will notice, you get dropped into emerg
 ```
 cryptsetup open /dev/sda3 sda3_crypt
 ```
-When volume is unlocke press Ctrl-D, the setu system should now continue to boot properly.
+When volume is unlocked press Ctrl-D, the setup system should now continue to boot properly.
 Update initramfs and copy and updat it on your boot partition
 ```
 update-initramfs -k all -u
