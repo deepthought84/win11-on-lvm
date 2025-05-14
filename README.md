@@ -126,8 +126,7 @@ Reboot to test if luks unlock works now when booting the hypervisor, your LVMs s
 
 Back on your main system:
 
-Assuming the Windows running in virt-manager is setup, now is time to configure it, add your GPU-Devices (like GPU and GPU Audio) in virt-manager, but do not start the VM. Add the resources that makes sense, I gave the machine all CPU-Cores and all system memory, minus 2 G (should be able to tweak this further but this is a safe  value). Do not add USB-Devices yet, as they might have different enumerators in the hypervisor system, we will get to this later.
-
+Assuming the Windows running in virt-manager is setup, now is time to configure it, add your GPU-Devices (like GPU and GPU Audio) and USB-Controller in virt-manager, but do not start the VM. Add the resources that makes sense, I gave the machine all CPU-Cores and all system memory, minus 2 G (should be able to tweak this further but this is a safe  value).
 Dump the xml-File with virsh and copy it into the hypervisor 
 ```
 virsh dumpxml skoll > skoll.xml
@@ -155,30 +154,18 @@ Next Reboot into the Hypervisor again and add the Windows-VM with
 ```
 virsh define skoll.xml
 ```
-Add a systemd-Unit for starting the VM and attaching the USB-Devices:
-```
-echo "[Unit]
-Description=start domain skoll
-
-[Service]
-ExecStart=/bin/bash /opt/start-skoll/start-skoll.sh skoll
-WorkingDirectory=/opt/start-skoll
-
-[Install]
-WantedBy=multi-user.target" > /etc/systemd/system/start-skoll.service
-systemctl daemon-reload
-systemctl enable start-skoll
-```
-copy start-skoll from this repository to /opt
-Replace the xml-Configs with your own devices (use lsusb to find out Vendor/Product-Ids), and update start-skoll.sh with the name of your devices (referencing the xml-Files).
-e.g. you have a keyboard.xml let this be reflected as keybaord in the devices arry.
-
 Now start the Windows-VM:
 ```
-systemctl start start-skoll
+virsh start skoll
 ```
 If everything went well, the Windows-VM should now take over and voila you Windows on encrypted LVM :)
 
+libvirt takes care of vfio binding and unbinding, so when you shutdown Windows you should see the terminal again.
+
+To have the VM autostarted on boot execute
+```
+virsh autostart skoll
+```
 ## Choose plymouth screen ##
 To have a smooth splash-screen I recommend to install plymouth and choose a theme (beautiful themes are available here https://github.com/adi1090x/plymouth-themes).
 Reboot and install and set the theme as in the hypervisor, and copy the initrd, to your boot partition,
