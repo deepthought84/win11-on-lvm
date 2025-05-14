@@ -1,9 +1,0 @@
-[Unit]
-Description=start domain skoll
-
-[Service]
-ExecStart=/bin/bash /opt/start-skoll/start-skoll.sh skoll
-WorkingDirectory=/opt/start-skoll
-
-[Install]
-WantedBy=multi-user.target
